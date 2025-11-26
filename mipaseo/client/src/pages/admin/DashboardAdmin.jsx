@@ -81,7 +81,7 @@ const DashboardAdmin = () => {
             className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
           >
             <Users className="h-5 w-5 mr-2" />
-            Ver Usuarios
+            Ver usuarios
           </Link>
         </div>
 
@@ -95,7 +95,7 @@ const DashboardAdmin = () => {
             className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
           >
             <Dog className="h-5 w-5 mr-2" />
-            Ver Paseadores
+            Ver paseadores
           </Link>
         </div>
       </div>

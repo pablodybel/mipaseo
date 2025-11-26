@@ -323,7 +323,7 @@ const Home = () => {
                 <h3 className="text-2xl font-bold text-gray-900">Nuestra Visión</h3>
               </div>
               <p className="text-gray-600 text-lg leading-relaxed">
-                Ser la plataforma líder en Argentina para el cuidado de mascotas,
+                Ser la plataforma líder en la Ciudad Autónoma de Buenos Aires para el cuidado de mascotas,
                 construyendo una comunidad sólida donde dueños y paseadores trabajen
                 juntos para garantizar el bienestar y la felicidad de cada mascota.
                 Aspiramos a crear un ecosistema de confianza mutua donde todos

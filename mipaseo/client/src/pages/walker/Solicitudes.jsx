@@ -403,7 +403,8 @@ const Solicitudes = () => {
                       <p className="font-medium">
                         {new Date(request.scheduledAt).toLocaleTimeString('es-AR', {
                           hour: '2-digit',
-                          minute: '2-digit'
+                          minute: '2-digit',
+                          hour12: false
                         })}
                       </p>
                     </div>

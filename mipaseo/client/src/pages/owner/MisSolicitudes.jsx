@@ -330,7 +330,7 @@ const MisSolicitudes = () => {
                     {request.status === 'ACCEPTED' && (
                       <button className="btn-primary flex items-center">
                         <CreditCard className="h-4 w-4 mr-2" />
-                        Pagar
+                        Realizar pago
                       </button>
                     )}
                   </div>

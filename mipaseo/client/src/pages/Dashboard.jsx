@@ -130,21 +130,21 @@ const Dashboard = () => {
                 className="flex items-center p-4 bg-primary-50 rounded-lg hover:bg-primary-100 hover:shadow-md transition-all border border-primary-200"
               >
                 <Plus className="h-5 w-5 text-primary-600 mr-3" />
-                <span className="font-semibold text-gray-800">Agregar Nueva Mascota</span>
+                <span className="font-semibold text-gray-800">Agregar nueva mascota</span>
               </Link>
               <Link
                 to="/paseadores"
                 className="flex items-center p-4 bg-secondary-50 rounded-lg hover:bg-secondary-100 hover:shadow-md transition-all border border-secondary-200"
               >
                 <Users className="h-5 w-5 text-secondary-600 mr-3" />
-                <span className="font-semibold text-gray-800">Buscar Paseadores</span>
+                <span className="font-semibold text-gray-800">Buscar paseadores</span>
               </Link>
               <Link
                 to="/mis-solicitudes"
                 className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 hover:shadow-md transition-all border border-gray-200"
               >
                 <Calendar className="h-5 w-5 text-primary-600 mr-3" />
-                <span className="font-semibold text-gray-800">Ver Mis Solicitudes</span>
+                <span className="font-semibold text-gray-800">Ver mis solicitudes</span>
               </Link>
             </div>
           </div>
@@ -321,21 +321,21 @@ const Dashboard = () => {
               className="flex items-center p-4 bg-secondary-50 rounded-lg hover:bg-secondary-100 hover:shadow-md transition-all border border-secondary-200"
             >
               <Calendar className="h-5 w-5 text-secondary-600 mr-3" />
-              <span className="font-semibold text-gray-800">Ver Solicitudes de Paseo</span>
+              <span className="font-semibold text-gray-800">Ver solicitudes de paseo</span>
             </Link>
             <Link
               to="/perfil"
               className="flex items-center p-4 bg-primary-50 rounded-lg hover:bg-primary-100 hover:shadow-md transition-all border border-primary-200"
             >
               <User className="h-5 w-5 text-primary-600 mr-3" />
-              <span className="font-semibold text-gray-800">Actualizar Mi Perfil</span>
+              <span className="font-semibold text-gray-800">Actualizar mi perfil</span>
             </Link>
             <Link
               to="/mis-resenas"
               className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 hover:shadow-md transition-all border border-gray-200"
             >
               <Star className="h-5 w-5 text-primary-600 mr-3" />
-              <span className="font-semibold text-gray-800">Ver Mis Reseñas</span>
+              <span className="font-semibold text-gray-800">Ver mis reseñas</span>
             </Link>
           </div>
         </div>
