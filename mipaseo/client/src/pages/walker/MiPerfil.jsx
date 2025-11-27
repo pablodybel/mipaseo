@@ -12,6 +12,7 @@ const MiPerfil = () => {
   const [loading, setLoading] = useState(false)
   const [selectedPhoto, setSelectedPhoto] = useState(null)
   const [selectedHours, setSelectedHours] = useState(user?.availableHours || [])
+  const isWalker = user?.role === 'WALKER'
 
   const {
     register,
@@ -46,12 +47,19 @@ const MiPerfil = () => {
       setLoading(true)
       
       const formData = new FormData()
-      Object.keys(data).forEach(key => {
-        formData.append(key, data[key])
-      })
       
-      // Agregar horarios seleccionados
-      formData.append('availableHours', JSON.stringify(selectedHours))
+      // Campos básicos para todos los usuarios
+      formData.append('name', data.name)
+      formData.append('phone', data.phone)
+      formData.append('address', data.address)
+      
+      // Campos específicos solo para paseadores
+      if (isWalker) {
+        formData.append('experienceYears', data.experienceYears)
+        formData.append('bio', data.bio)
+        formData.append('neighborhood', data.neighborhood)
+        formData.append('availableHours', JSON.stringify(selectedHours))
+      }
       
       if (selectedPhoto) {
         formData.append('avatar', selectedPhoto)
@@ -225,113 +233,115 @@ const MiPerfil = () => {
             </div>
           </div>
 
-          {/* Professional Information */}
-          <div className="space-y-4 pt-6 border-t">
-            <h3 className="text-lg font-semibold text-gray-900">Información Profesional</h3>
+          {/* Professional Information - Solo para paseadores */}
+          {isWalker && (
+            <div className="space-y-4 pt-6 border-t">
+              <h3 className="text-lg font-semibold text-gray-900">Información Profesional</h3>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Barrio donde presta servicio
-              </label>
-              <select
-                {...register('neighborhood', {
-                  required: 'El barrio es requerido'
-                })}
-                disabled={!isEditing}
-                className="input"
-              >
-                <option value="">Selecciona tu barrio</option>
-                {CABA_NEIGHBORHOODS.map((neighborhood) => (
-                  <option key={neighborhood} value={neighborhood}>
-                    {neighborhood}
-                  </option>
-                ))}
-              </select>
-              {errors.neighborhood && (
-                <p className="mt-1 text-sm text-red-600">{errors.neighborhood.message}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Años de experiencia
-              </label>
-              <input
-                {...register('experienceYears', {
-                  required: 'La experiencia es requerida',
-                  min: { value: 0, message: 'Mínimo 0 años' },
-                  max: { value: 50, message: 'Máximo 50 años' },
-                  valueAsNumber: true
-                })}
-                type="number"
-                disabled={!isEditing}
-                className="input"
-              />
-              {errors.experienceYears && (
-                <p className="mt-1 text-sm text-red-600">{errors.experienceYears.message}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Biografía
-              </label>
-              <textarea
-                {...register('bio', {
-                  required: 'La biografía es requerida',
-                  maxLength: { value: 500, message: 'Máximo 500 caracteres' }
-                })}
-                rows="4"
-                disabled={!isEditing}
-                className="input"
-                placeholder="Cuéntanos sobre tu experiencia con mascotas..."
-              />
-              {errors.bio && (
-                <p className="mt-1 text-sm text-red-600">{errors.bio.message}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
-                <Clock className="inline h-5 w-5 mr-2 text-gray-600" />
-                Horarios disponibles (paseos de 1 hora)
-              </label>
-              <p className="text-sm text-gray-500 mb-3">
-                Selecciona los horarios en los que puedes realizar paseos. Cada paseo tiene una duración de 1 hora.
-              </p>
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
-                {AVAILABLE_HOURS.map((hour) => (
-                  <button
-                    key={hour}
-                    type="button"
-                    onClick={() => toggleHour(hour)}
-                    disabled={!isEditing}
-                    className={`
-                      py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200
-                      ${selectedHours.includes(hour)
-                        ? 'bg-primary-600 text-white shadow-md hover:bg-primary-700'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }
-                      ${!isEditing ? 'cursor-default opacity-75' : 'cursor-pointer'}
-                      disabled:opacity-50
-                    `}
-                  >
-                    {hour}
-                  </button>
-                ))}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Barrio donde presta servicio
+                </label>
+                <select
+                  {...register('neighborhood', {
+                    required: isWalker ? 'El barrio es requerido' : false
+                  })}
+                  disabled={!isEditing}
+                  className="input"
+                >
+                  <option value="">Selecciona tu barrio</option>
+                  {CABA_NEIGHBORHOODS.map((neighborhood) => (
+                    <option key={neighborhood} value={neighborhood}>
+                      {neighborhood}
+                    </option>
+                  ))}
+                </select>
+                {errors.neighborhood && (
+                  <p className="mt-1 text-sm text-red-600">{errors.neighborhood.message}</p>
+                )}
               </div>
-              {selectedHours.length > 0 && (
-                <p className="mt-3 text-sm text-primary-600">
-                  {selectedHours.length} {selectedHours.length === 1 ? 'horario seleccionado' : 'horarios seleccionados'}
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Años de experiencia
+                </label>
+                <input
+                  {...register('experienceYears', {
+                    required: isWalker ? 'La experiencia es requerida' : false,
+                    min: { value: 0, message: 'Mínimo 0 años' },
+                    max: { value: 50, message: 'Máximo 50 años' },
+                    valueAsNumber: true
+                  })}
+                  type="number"
+                  disabled={!isEditing}
+                  className="input"
+                />
+                {errors.experienceYears && (
+                  <p className="mt-1 text-sm text-red-600">{errors.experienceYears.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Biografía
+                </label>
+                <textarea
+                  {...register('bio', {
+                    required: isWalker ? 'La biografía es requerida' : false,
+                    maxLength: { value: 500, message: 'Máximo 500 caracteres' }
+                  })}
+                  rows="4"
+                  disabled={!isEditing}
+                  className="input"
+                  placeholder="Cuéntanos sobre tu experiencia con mascotas..."
+                />
+                {errors.bio && (
+                  <p className="mt-1 text-sm text-red-600">{errors.bio.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  <Clock className="inline h-5 w-5 mr-2 text-gray-600" />
+                  Horarios disponibles (paseos de 1 hora)
+                </label>
+                <p className="text-sm text-gray-500 mb-3">
+                  Selecciona los horarios en los que puedes realizar paseos. Cada paseo tiene una duración de 1 hora.
                 </p>
-              )}
-              {isEditing && selectedHours.length === 0 && (
-                <p className="mt-3 text-sm text-amber-600">
-                  Selecciona al menos un horario disponible
-                </p>
-              )}
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                  {AVAILABLE_HOURS.map((hour) => (
+                    <button
+                      key={hour}
+                      type="button"
+                      onClick={() => toggleHour(hour)}
+                      disabled={!isEditing}
+                      className={`
+                        py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200
+                        ${selectedHours.includes(hour)
+                          ? 'bg-primary-600 text-white shadow-md hover:bg-primary-700'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        }
+                        ${!isEditing ? 'cursor-default opacity-75' : 'cursor-pointer'}
+                        disabled:opacity-50
+                      `}
+                    >
+                      {hour}
+                    </button>
+                  ))}
+                </div>
+                {selectedHours.length > 0 && (
+                  <p className="mt-3 text-sm text-primary-600">
+                    {selectedHours.length} {selectedHours.length === 1 ? 'horario seleccionado' : 'horarios seleccionados'}
+                  </p>
+                )}
+                {isEditing && selectedHours.length === 0 && (
+                  <p className="mt-3 text-sm text-amber-600">
+                    Selecciona al menos un horario disponible
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Action Buttons */}
           {isEditing && (

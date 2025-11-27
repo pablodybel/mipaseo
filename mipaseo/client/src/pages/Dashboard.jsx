@@ -146,6 +146,13 @@ const Dashboard = () => {
                 <Calendar className="h-5 w-5 text-primary-600 mr-3" />
                 <span className="font-semibold text-gray-800">Ver mis solicitudes</span>
               </Link>
+              <Link
+                to="/perfil"
+                className="flex items-center p-4 bg-primary-50 rounded-lg hover:bg-primary-100 hover:shadow-md transition-all border border-primary-200"
+              >
+                <User className="h-5 w-5 text-primary-600 mr-3" />
+                <span className="font-semibold text-gray-800">Actualizar mi perfil</span>
+              </Link>
             </div>
           </div>
 

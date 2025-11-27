@@ -104,7 +104,7 @@ const App = () => {
         <Route
           path="perfil"
           element={
-            <ProtectedRoute allowedRoles={['WALKER']}>
+            <ProtectedRoute allowedRoles={['OWNER', 'WALKER']}>
               <MiPerfil />
             </ProtectedRoute>
           }
